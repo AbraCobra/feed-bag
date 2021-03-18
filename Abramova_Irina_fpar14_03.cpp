@@ -1,30 +1,35 @@
 # include "TXLib.h"
 
 void Background_draw();
-void WindMill_draw();
+void WindMill_draw  (int x, int y, double sizeX, double sizeY);
 void Cloud_draw     (int x, int y, double sizeX, double sizeY, COLORREF cloudColor);
 void MouseBody_draw (int x, int y, double width, double height, COLORREF bodyColor, COLORREF earsColor);
-void Tree_draw      (int x, int y, int n);
+void Tree_draw      (int x, int y, int n, double sizeX, double sizeY);
 void Grass_draw     (int x, int y, COLORREF color, int height);
 void Butterfly_draw (int x, int y, COLORREF color, int bigness);
 void Cheese_draw    (int x, int y, int bigness);
 void CatBody_draw   (int x, int y, double width, double height, COLORREF catColor, COLORREF cat_breastColor);
-
+void Flower_draw    (int x, int y, int r, int R, double sizeX, double sizeY);
 
 int main()
     {
      txCreateWindow (900, 800);
-
      Background_draw();
-     WindMill_draw ();
-     Cheese_draw    ( 50, 500, 3);
+
+     Tree_draw      (240, 290,   8, 0.8, 1.0);
+     Tree_draw      (345, 260,  10,   1, 1.5);
+     Cheese_draw    ( 50, 500,  3);
      Cloud_draw     (110,  60, 1.2, 1.2, RGB (197, 210, 216));
      Cloud_draw     (500, 190, 0.5, 0.5, RGB (201, 213, 216));
      Cloud_draw     (700,  40, 0.8, 1.0, RGB (151, 177, 187));
+     WindMill_draw  ( 80, 280, 0.5, 0.5);
+     WindMill_draw  (450, 290, 0.3, 0.3);
      MouseBody_draw (110, 730, 1.0, 1.0, RGB (116, 143, 141), RGB (255, 128, 128));
-     Tree_draw      (750, 300, 8);
-     Tree_draw      (850, 270, 10);
-     Tree_draw      (350, 320, 10);
+     Tree_draw      (750, 300,  10, 0.5, 0.7);
+     Tree_draw      (850, 230,  10, 0.9, 1.7);
+     Tree_draw      (650, 320,  10, 0.2, 0.5);
+
+
      MouseBody_draw (355, 585, 0.5, 0.7, RGB (187, 187, 141), RGB (255, 189, 255));
      CatBody_draw   (600, 600, 1.0, 1.1, RGB (120, 187, 141), RGB (255, 170, 255));
      Cheese_draw    (350, 600, 2);
@@ -34,30 +39,34 @@ int main()
      CatBody_draw   (850, 600, 0.7, 0.6, RGB (255, 157,  60), RGB (255, 245, 255));
      CatBody_draw   (600, 400, 0.3, 0.3, RGB (187, 157, 160), RGB (  0, 245, 255));
      MouseBody_draw (658, 510, 0.2, 0.2, RGB (160, 190, 141), RGB (255, 189, 240));
-     Grass_draw     (630, 515, RGB (128, 255, 0), 2);
-     Grass_draw     (690, 515, RGB (103, 205, 0), 2);
+     Grass_draw     (530, 515, RGB (128, 255, 0), 2);
+     Grass_draw     (590, 518, RGB (103, 205, 0), 2);
 
      for (int i = 1; i < 15; i++)
         {
         Grass_draw (- 100 + 80*i, 800, RGB (128, 255, 47), 1);
         Grass_draw (-  90 + 80*i, 800, RGB (103, 143, 33), 1);
         }
-
      Butterfly_draw (600, 100, RGB (204, 139,  51), 1);
      Butterfly_draw (300, 160, RGB (204, 155, 202), 2);
      Butterfly_draw (700, 260, RGB (255, 255, 113), 3);
+     Flower_draw    (810, 345, 10, 20, 0.2, 0.2);
+     Flower_draw    (830, 465, 15, 20, 0.2, 0.2);
+     Flower_draw    (330, 420, 17, 10, 0.2, 0.2);
+     Flower_draw    (330, 360, 17, 10, 0.2, 0.2);
+     Flower_draw    (380, 460, 17, 10, 0.2, 0.2);
+     Flower_draw    (280, 420, 17, 10, 0.2, 0.2);
 
      return 0;
-
      }
 
 void Background_draw()
     {
      txSetColor     (RGB (151, 255, 255));
      txSetFillColor (RGB (151, 255, 255));
-     txFloodFill    (110, 100);
-     txSetColor     (RGB (55, 165, 84));
-     txSetFillColor (RGB (55, 165, 84));
+     txFloodFill         (110, 100);
+     txSetColor     (RGB ( 55, 165, 84));
+     txSetFillColor (RGB ( 55, 165, 84));
 
      txEllipse   (-120, 330,  200, 700);
      txEllipse   ( 150, 300,  370, 500);
@@ -67,23 +76,28 @@ void Background_draw()
      txFloodFill ( 300, 700);
     }
 
-void WindMill_draw()
+void WindMill_draw(int x, int y, double sizeX, double sizeY)
     {
     txSetColor     (RGB (183, 104, 87));
     txSetFillColor (RGB (183, 104, 87));
-    POINT mill[5] = {{155, 260}, {110, 310}, {80, 520}, {240, 520}, {200, 310}};
-    txPolygon (mill, 5);
+    POINT mill[7] = {{x, y - 40*sizeY}, {x + 40*sizeX, y - 10*sizeY},
+                     {x + 60*sizeX, y + 120*sizeY}, {x + 60*sizeX, y + 170*sizeY},
+                     {x - 60*sizeX, y + 170*sizeY}, {x - 60*sizeX, y + 120*sizeY},
+                     {x - 40*sizeX, y - 10*sizeY}};
+    txPolygon (mill, 7);
 
     txSetFillColor  (RGB (135, 126, 80));
-    POINT blades1[4] = {{100, 180}, {190, 180}, {120, 440}, {210, 440}};
-    txPolygon (blades1, 4);
-    POINT blades2[4] = {{20, 350}, {20, 270}, {300, 350}, {300, 270}};
-    txPolygon (blades2, 4);
+    POINT blades1[3] = {{x, y}, {x - 100*sizeX, y - 110*sizeY}, {x - 130*sizeX, y - 80*sizeY}};
+    txPolygon (blades1, 3);
 
-    txSetColor     (TX_BROWN, 5);
-    txSetFillColor (RGB(64, 128, 126));
-    txCircle       (155, 310,  20);
-    txRectangle    (100, 460, 140, 520);
+    POINT bladesIn1[3] = {{x, y}, {x - 100*sizeX, y + 110*sizeY}, {x - 130*sizeX, y + 80*sizeY}};
+    txPolygon (bladesIn1, 3);
+
+    POINT blades2[3] = {{x, y}, {x + 100*sizeX, y - 110*sizeY}, {x + 130*sizeX, y - 80*sizeY}};
+    txPolygon (blades2, 3);
+
+    POINT bladesIn2[3] = {{x, y}, {x + 100*sizeX, y + 110*sizeY}, {x + 130*sizeX, y + 80*sizeY}};
+    txPolygon (bladesIn2, 3);
     }
 
 void Cloud_draw (int x, int y, double sizeX, double sizeY, COLORREF cloudColor)
@@ -124,31 +138,34 @@ void MouseBody_draw (int x, int y, double width, double height, COLORREF bodyCol
     txCircle (x + 145*width, y -  50*height, 7*width);
     txLine   (x + 165*width, y -  77*height, x + 125*width, y - 27*height);
     txLine   (x + 185*width, y -  63*height, x + 105*width, y - 37*height);
+
     txArc    (x +  90*width, y, x - 100*width, y - 20*height, 45, 270);
     }
 
-void Tree_draw (int x, int y, int n)
+void Tree_draw (int x, int y, int n, double sizeX, double sizeY)
     {
+
     txSetFillColor (RGB (128, 64, 0));
-    POINT trunk[3] = {{x, y}, {x - 20, y + 200}, {x + 20, y + 200}};
+    POINT trunk[3] = {{x, y}, {x - 20*sizeX, y + 200*sizeY}, {x + 20*sizeX, y + 200*sizeY}};
     txPolygon (trunk, 3);
 
     for (int j = n; j > 0; j--)
         {
         for (int i = 0; i < j; i++)
             {
-            txSetFillColor (RGB (rand() % 10, rand() % 255, rand() % 10));
-            txCircle (x + 15*i, y + 15*j, 10);
+            txSetFillColor (RGB (rand()%10, rand()%255, rand()%10));
+            txCircle (x + 15*i*sizeX, y + 15*j*sizeY, 16*sizeX);
             }
         }
     for (int j = n; j > 0; j--)
         {
         for (int i = 0; i < j; i++)
             {
-            txSetFillColor (RGB (rand() % 10, rand() % 255, rand() % 10));
-            txCircle (x - 15*i, y + 15*j, 10);
+            txSetFillColor (RGB (rand()%10, rand()%255, rand()%10));
+            txCircle (x - 15*i*sizeX, y + 15*j*sizeY, 16*sizeX);
             }
         }
+
     }
 
 void CatBody_draw (int x, int y, double width, double height, COLORREF catColor, COLORREF cat_breastColor)
@@ -168,7 +185,7 @@ void CatBody_draw (int x, int y, double width, double height, COLORREF catColor,
     txPolygon (cats_earR, 3);
 
     txSetFillColor (cat_breastColor);
-    txEllipse (x - 10*width, y - 20*height, x + 50*width, y+ 100*height);
+    txEllipse (x - 10*width, y - 20*height, x + 50*width, y + 100*height);
 
     txSetFillColor (catColor);
     txCircle (x + 20*width, y - 30*height, 40*width);
@@ -209,7 +226,7 @@ void Butterfly_draw (int x, int y, COLORREF color, int bigness)
     int b = y;
     txSetColor (TX_DARKGRAY);
     txLine (a, b, a + 30/bigness, b - 40/bigness);
-    txLine (a, b, a + 50/bigness, b - 5/bigness);
+    txLine (a, b, a + 50/bigness, b -  5/bigness);
     txSetColor (color);
     txSetFillColor (color);
 
@@ -235,12 +252,12 @@ void Butterfly_draw (int x, int y, COLORREF color, int bigness)
 
 void Cheese_draw (int x, int y, int bigness)
     {
-    txSetColor (TX_LIGHTRED, 5);
+    txSetColor     (TX_LIGHTRED, 5);
     txSetFillColor (RGB (181, 0, 0));
     POINT cheese[3] = {{x, y}, {x - 140/bigness, y + 30/bigness}, {x + 150/bigness, y + 30/bigness}};
     txPolygon (cheese, 3);
 
-    txSetColor     (RGB (181, 170, 43), 5);
+    txSetColor     (RGB (181, 170,  43), 5);
     txSetFillColor (RGB (227, 221, 140));
     txRectangle (x - 140/bigness, y + 30/bigness, x + 150/bigness, y + 80/bigness);
     txCircle (x -  80/bigness, y + 50/bigness, 5/bigness);
@@ -248,4 +265,49 @@ void Cheese_draw (int x, int y, int bigness)
     txCircle (x +  10/bigness, y + 40/bigness, 5/bigness);
     txCircle (x +  60/bigness, y + 50/bigness, 5/bigness);
     txCircle (x + 130/bigness, y + 55/bigness, 5/bigness);
+    }
+
+void Flower_draw (int x, int y, int r, int R, double sizeX, double sizeY)
+    {
+
+    txSetColor     (RGB (rand()%255, rand()%255, rand()%255), 3);
+    txSetFillColor (RGB (rand()%255, rand()%255, rand()%255));
+
+    txCircle (x - 40*sizeX, y - 40*sizeY, r*sizeX);
+    txCircle (x - 40*sizeX, y + 40*sizeY, r*sizeX);
+    txCircle (x + 40*sizeX, y + 40*sizeY, r*sizeX);
+    txCircle (x + 40*sizeX, y - 40*sizeY, r*sizeX);
+
+    txSetFillColor (RGB (rand()%255, rand()%255, rand()%255));
+    txCircle (x, y, R*sizeX);
+
+    txSetFillColor (RGB (rand()%255, rand()%255, rand()%255));
+
+    POINT petalUp[5] = {{x - 15*sizeX, y - 30*sizeY},
+                        {x - 30*sizeX, y - 70*sizeY},
+                        {x, y - 110*sizeY},
+                        {x + 30*sizeX, y - 70*sizeY},
+                        {x + 15*sizeX, y - 30*sizeY}};
+    txPolygon (petalUp, 5);
+
+    POINT petalDown[5] = {{x - 15*sizeX, y + 30*sizeY},
+                          {x - 30*sizeX, y + 70*sizeY},
+                          {x, y + 110*sizeY},
+                          {x + 30*sizeX, y + 70*sizeY},
+                          {x + 15*sizeX, y + 30*sizeY}};
+    txPolygon (petalDown, 5);
+
+    POINT petalLeft[5] = {{x -  30*sizeX, y - 15*sizeY},
+                          {x -  70*sizeX, y - 30*sizeY},
+                          {x - 110*sizeX, y},
+                          {x -  70*sizeX, y + 30*sizeY},
+                          {x -  30*sizeX, y + 15*sizeY}};
+    txPolygon (petalLeft, 5);
+
+    POINT petalRight[5] = {{x +  30*sizeX, y - 15*sizeY},
+                           {x +  70*sizeX, y - 30*sizeY},
+                           {x + 110*sizeX, y},
+                           {x +  70*sizeX, y + 30*sizeY},
+                           {x +  30*sizeX, y + 15*sizeY}};
+    txPolygon (petalRight, 5);
     }
