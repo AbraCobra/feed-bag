@@ -11,29 +11,31 @@ void FinishScene();
 void SpringFon();
 void MountainsLandscape();
 void SavanahLandscape();
-void Cloud_draw       (int  x, int  y, double sizeX, double sizeY, COLORREF cloudColor);
-void Tree_draw        (int  x, int  y, int n, double sizeX, double sizeY);
-void WindMill_draw    (int  x, int  y, double sizeX, double sizeY);
-void Millblades       (int x0, int y0, int x, int y);
-void Butterfly_draw   (int  x, int  y, COLORREF color, int bigness);
-void Water_lily_draw  (int  x, int  y, double sizeX, double sizeY);
-void Cactus           (int  x, int  y, double sizeX, double sizeY);
-void Chuck            (int  x, int  y, double sizeX, double sizeY, int eyebrows, int hear);
-void Title_draw       (int  x, int  y);
-void TitleEnd_draw    (int  x, int  y);
-void WorkisDone       (int  x, int  y);
-void FinishTitles     (int  x, int  y);
-void Grass_draw       (int  x, int  y, COLORREF color, double sizeX, double sizeY);
-void MouseBody_draw   (int  x, int  y, double width, double height, COLORREF bodyColor, COLORREF earsColor);
-void CatBody_draw     (int  x, int  y, double width, double height, double eyebrows,
-                       COLORREF catColor, COLORREF cat_breastColor);
-void Skateboard_draw  (int  x, int  y, double sizeX, double sizeY);
-void Girl_draw        (int  x, int  y, double sizeX, double sizeY, int hands_UP,
-                       int legs_DISTANCE,  int eyebrows_UP,
-                       int eyesCRAZYleft,  int eyesPUPILleft,
-                       int eyesCRAZYright, int eyesPUPILright,
-                       int mouthTOPpoint,  int mouthLOWERpoint,
-                       COLORREF HairColor, COLORREF BodyColor = (RGB (224, 199, 160)));
+void Cloud_draw          (int  x, int  y, double sizeX, double sizeY, COLORREF cloudColor);
+void Tree_draw           (int  x, int  y, int n, double sizeX, double sizeY);
+void WindMill_draw       (int  x, int  y, double sizeX, double sizeY);
+void Millblades_draw     (int x0, int y0, int x, int y);
+void Butterfly_draw      (int  x, int  y, COLORREF color, int bigness);
+void Water_lily_draw     (int  x, int  y, double sizeX, double sizeY);
+void Cactus_draw         (int  x, int  y, double sizeX, double sizeY);
+void Chuck_draw          (int  x, int  y, double sizeX, double sizeY, int eyebrows, int hear);
+void Title_draw          (int  x, int  y);
+void TitleEnd_draw       (int  x, int  y);
+void WorkisDone          (int  x, int  y);
+void FinishTitles        (int  x, int  y);
+void Grass_draw          (int  x, int  y, COLORREF color, double sizeX, double sizeY);
+void MouseBody_draw      (int  x, int  y, double width, double height, COLORREF bodyColor, COLORREF earsColor);
+void CatBody_draw        (int  x, int  y, double width, double height, double eyebrows,
+                          COLORREF catColor, COLORREF cat_breastColor);
+void Skateboard_draw     (int  x, int  y, double sizeX, double sizeY);
+void Skate_wheels_drawer (int x0, int y0,  int r);
+void BigDipper_draw      (int x, int y, int r);
+void Girl_draw           (int  x, int  y, double sizeX, double sizeY, int hands_UP,
+                          int legs_DISTANCE,  int eyebrows_UP,
+                          int eyesCRAZYleft,  int eyesPUPILleft,
+                          int eyesCRAZYright, int eyesPUPILright,
+                          int mouthTOPpoint,  int mouthLOWERpoint,
+                          COLORREF HairColor, COLORREF BodyColor = (RGB (224, 199, 160)));
 int main()
     {
     txCreateWindow (1100, 900);
@@ -51,11 +53,13 @@ int main()
 void EntryScene()
     {
     txBegin();
+
     int t = 0;
     while (t <= 110)
         {
         txClear();
         SpringFonBegining();
+
         Grass_draw (    0 +  2*t, 400, TX_GREEN, 0.5, 0.5);
         Grass_draw (  100 +  2*t, 400, TX_GREEN, 0.7, 0.7);
         Grass_draw (  150 +  2*t, 400, TX_GREEN, 0.5, 0.5);
@@ -68,18 +72,23 @@ void EntryScene()
         Grass_draw (  550 +  2*t, 400, TX_GREEN, 0.5, 0.5);
         Grass_draw (  750 +  2*t, 400, TX_GREEN, 0.6, 0.6);
         Grass_draw (  950 +  2*t, 400, TX_GREEN, 0.5, 0.5);
-        Title_draw ( 1100 - 15*t, 100);
-        Skateboard_draw (- 100 + 10*t, 700, 0.8, 0.8);
-        Chuck           (   20 + 10*t, 600, 0.5, 0.5, (t%2*20) - 10, (t%2*30) + 50);
+
+        Title_draw          ( 1100 - 15*t, 100);
+        Skateboard_draw     (- 100 + 10*t, 700, 0.8, 0.8);
+        Skate_wheels_drawer ( - 50 + 10*t + ROUND (4*cos(t)) + ROUND (3*sin(t)), 730 + ROUND (3*cos(t)) - ROUND (4*sin(t)), 20);
+        Chuck_draw          (   20 + 10*t, 600, 0.5, 0.5, (t%2*20) - 10, (t%2*30) + 50);
+
         txSleep (100);
         t++;
         }
+
     txEnd();
     }
 
 void SpringCountryScene()
     {
     txBegin();
+
     int t = 0;
     while (t <= 100)
         {
@@ -90,10 +99,10 @@ void SpringCountryScene()
         Cloud_draw     (2*t + 900, 170, 0.5, 0.5, TX_WHITE);
 
 
-        Millblades (675, 180, ROUND (  100*cos(t*0.1) + 675),        ROUND (  100*sin(t*0.1) + 180));
-        Millblades (675, 180, ROUND (- 100*cos(t*0.1) + 675),        ROUND (- 100*sin(t*0.1) + 180));
-        Millblades (675, 180, ROUND (- 100*cos(t*0.1  + 1.5) + 675), ROUND (- 100*sin(t*0.1 + 1.5) + 180));
-        Millblades (675, 180, ROUND (  100*cos(t*0.1  + 1.5) + 675), ROUND (  100*sin(t*0.1 + 1.5) + 180));
+        Millblades_draw (675, 180, ROUND (  100*cos(t*0.1) + 675),        ROUND (  100*sin(t*0.1) + 180));
+        Millblades_draw (675, 180, ROUND (- 100*cos(t*0.1) + 675),        ROUND (- 100*sin(t*0.1) + 180));
+        Millblades_draw (675, 180, ROUND (- 100*cos(t*0.1  + 1.5) + 675), ROUND (- 100*sin(t*0.1  + 1.5) + 180));
+        Millblades_draw (675, 180, ROUND (  100*cos(t*0.1  + 1.5) + 675), ROUND (  100*sin(t*0.1  + 1.5) + 180));
 
         Butterfly_draw (t + 600, ROUND (abs (sin (t*0.5)*M_PI)*40 +  50), RGB (204, 139,  51), 2);
         Butterfly_draw (t + 300, ROUND (abs (sin (t*0.5)*M_PI)*40 +  70), RGB (204, 155, 202), 2);
@@ -108,13 +117,17 @@ void SpringCountryScene()
         Grass_draw     (460, 520, TX_GREEN, 0.9, 0.9);
 
 
-        Girl_draw       (600 - 4*t, 500 - 0.5*t, 0.7, 0.7, (t/5)%10 + 10, ((t/4)%2)*50 - 50,
-                        (t/2)%10, 0, 0, 0, 0, t%2*3, 0, RGB(219, 112, 147));
-        Skateboard_draw (- 100 + 10*t, 700, 0.8, 0.8);
-        Chuck           (   20 + 10*t, 600, 0.5, 0.5, (t%2*20) - 10, (t%2*30) + 50);
+        Girl_draw      (600 - 4*t, 500 - 0.5*t, 0.7, 0.7, (t/5)%10 + 10, ((t/4)%2)*50 - 50,
+                       (t/2)%10, 0, 0, 0, 0, t%2*3, 0, RGB (219, 112, 147));
+
+        Skateboard_draw     (- 100 + 10*t, 700, 0.8, 0.8);
+        Skate_wheels_drawer (-  50 + 10*t + ROUND (4*cos(t)) + ROUND (3*sin(t)), 730 + ROUND (3*cos(t)) - ROUND (4*sin(t)), 20);
+        Chuck_draw          (   20 + 10*t, 600, 0.5, 0.5, (t%2*20) - 10, (t%2*30) + 50);
+
         txSleep (100);
         t++;
         }
+
     txEnd();
     }
 
@@ -153,67 +166,82 @@ void SpringFon()
 void PinkMountainScene()
     {
     txBegin();
+
     int t = 0;
     while (t <= 110)
         {
         txClear();
-
         MountainsLandscape();
+
         Water_lily_draw (7*t +  150, 700, 0.8, 0.8);
         Water_lily_draw (  t +  350, 600, 0.5, 0.5);
         Water_lily_draw (  t +   50, 650, 0.3, 0.3);
         Water_lily_draw (  t +  850, 550, 0.7, 0.7);
-        Chuck           (7*t +  180, 600, 0.5, 0.5, (t%2*20) - 10, (t%2*30) + 50);
+        Chuck_draw      (7*t +  180, 600, 0.5, 0.5, (t%2*20) - 10, (t%2*30) + 50);
 
         txSleep (100);
         t++;
         }
+
     txEnd();
     }
 
 void NightSavanahScene()
     {
+
     txBegin();
     int t = 0;
     while (t < 14)
         {
         txClear();
-
         SavanahLandscape();
-        Cactus (270, 450, 2, 2);
-        Cactus (170, 450, 3, 3);
-        Cactus (870, 440, 2, 2);
-        Cactus (970, 470, 4, 4);
-        Cactus (100, 460, 4, 4);
-        Cactus (850, 560, 1, 1);
-        Chuck  (t*50, 10 + 20*t, 0.5, 0.5, 10, (t%2*30) + 50);
-        txSleep(200);
 
+        BigDipper_draw (  20, 150, 4);
+        BigDipper_draw (  40, 350, 5);
+        BigDipper_draw (1010, 150, 4);
+        BigDipper_draw (1010, 250, 5);
+        Cactus_draw    ( 270, 450, 2, 2);
+        Cactus_draw    ( 170, 450, 3, 3);
+        Cactus_draw    ( 870, 440, 2, 2);
+        Cactus_draw    ( 970, 470, 4, 4);
+        Cactus_draw    ( 100, 460, 4, 4);
+        Cactus_draw    ( 850, 560, 1, 1);
+
+        Chuck_draw     (t*50, 10 + 20*t, 0.5, 0.5, 10, (t%2*30) + 50);
+
+        txSleep(200);
         t++;
         }
+
     txEnd();
     }
 
 void NightSavanahSceneEnd()
     {
     txBegin();
+
     int t = 0;
     while (t < 10)
         {
         txClear();
-
         SavanahLandscape();
-        Cactus (270, 450, 2, 2);
-        Cactus (170, 450, 3, 3);
-        Cactus (870, 440, 2, 2);
-        Cactus (970, 470, 4, 4);
-        Cactus (100, 460, 4, 4);
-        Cactus (850, 560, 1, 1);
-        Chuck  (820, 520, 0.5, 0.5, - 30, (t%2*30) + 50);
-        txSleep(200);
 
+        BigDipper_draw (  20, 150, 4);
+        BigDipper_draw (  40, 350, 5);
+        BigDipper_draw (1010, 150, 4);
+        BigDipper_draw (1010, 250, 5);
+        Cactus_draw    ( 270, 450, 2, 2);
+        Cactus_draw    ( 170, 450, 3, 3);
+        Cactus_draw    ( 870, 440, 2, 2);
+        Cactus_draw    ( 970, 470, 4, 4);
+        Cactus_draw    ( 100, 460, 4, 4);
+        Cactus_draw    ( 850, 560, 1, 1);
+        Chuck_draw     ( 820, 520, 0.5, 0.5, - 30, (t%2*30) + 50);
+
+        txSleep(200);
         t++;
         }
+
     txEnd();
     }
 
@@ -221,18 +249,25 @@ void NightSavanahSceneEnd()
 void FinishScene()
     {
     txBegin();
+
     int t = 0;
     while (t < 500)
         {
         txClear();
-
         SavanahLandscape();
-        FinishTitles  (250,    900 - 5*t);
-        WorkisDone    (300,   1500 - 5*t);
+
+        BigDipper_draw (  20, 150, 4);
+        BigDipper_draw (  40, 350, 5);
+        BigDipper_draw (1010, 150, 4);
+        BigDipper_draw (1010, 250, 5);
+
+        FinishTitles   ( 250,  900 - 5*t);
+        WorkisDone     ( 300, 1500 - 5*t);
 
         txSleep(20);
         t++;
         }
+
     txEnd();
     }
 
@@ -240,14 +275,14 @@ void WindMill_draw (int x, int y, double sizeX, double sizeY)
     {
     txSetColor     (RGB (183, 104, 87));
     txSetFillColor (RGB (183, 104, 87));
-    POINT mill[7] = {{           x, y -  40*sizeY}, {x + 40*sizeX, y -  10*sizeY},
-                     {x + 60*sizeX, y + 120*sizeY}, {x + 60*sizeX, y + 170*sizeY},
-                     {x - 60*sizeX, y + 170*sizeY}, {x - 60*sizeX, y + 120*sizeY},
-                     {x - 40*sizeX, y -  10*sizeY}};
+    POINT mill[7] = {{                   x, y - ROUND ( 40*sizeY)}, {x + ROUND (40*sizeX), y - ROUND ( 10*sizeY)},
+                     {x + ROUND (60*sizeX), y + ROUND (120*sizeY)}, {x + ROUND (60*sizeX), y + ROUND (170*sizeY)},
+                     {x - ROUND (60*sizeX), y + ROUND (170*sizeY)}, {x - ROUND (60*sizeX), y + ROUND (120*sizeY)},
+                     {x - ROUND (40*sizeX), y - ROUND ( 10*sizeY)}};
     txPolygon (mill, 7);
     }
 
-void Millblades (int x0, int y0, int x, int y)
+void Millblades_draw (int x0, int y0, int x, int y)
     {
     txSetColor (RGB (109, 91, 82), 25);
     txLine     (x0, y0, x, y);
@@ -256,7 +291,8 @@ void Millblades (int x0, int y0, int x, int y)
 void Tree_draw (int x, int y, int n, double sizeX, double sizeY)
     {
     txSetFillColor (RGB (128, 64, 0));
-    POINT trunk[3] = {{x, y}, {x - 20*sizeX, y + 200*sizeY}, {x + 20*sizeX, y + 200*sizeY}};
+    POINT trunk[3] = {{x, y}, {x - ROUND (20*sizeX), y + ROUND (200*sizeY)},
+                              {x + ROUND (20*sizeX), y + ROUND (200*sizeY)}};
     txPolygon (trunk, 3);
 
     txSetFillColor (RGB (40, 203, 88));
@@ -363,7 +399,7 @@ void MountainsLandscape()
     POINT pinkfourth[4] = {{860, 250}, {970, 260}, {1105, 470}, {970, 400}};
     txPolygon (pinkfourth, 4);
 
-    //---------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
     txSetColor      (RGB (124, 252, 0));
     txSetFillColor  (RGB (124, 252, 0));
@@ -384,7 +420,7 @@ void MountainsLandscape()
     POINT sungreenthird[3] = {{970, 410}, {1150, 480}, {1150, 550}};
     txPolygon (sungreenthird, 3);
 
-    //-------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
     txSetColor      (RGB (0, 255, 252), 3);
     txSetFillColor  (RGB (0, 255, 252));
@@ -392,7 +428,7 @@ void MountainsLandscape()
     POINT river[4] = {{0, 800}, {0, 500}, {1150, 570},{1150, 800}};
     txPolygon (river, 4);
 
-   //--------------------------------------------------------------------------------------------------
+   //---------------------------------------------------------------------
 
     txSetColor      (RGB (50, 255, 50), 3);
     txSetFillColor  (RGB (50, 255, 50));
@@ -458,7 +494,7 @@ void SavanahLandscape()
     txPolygon (mountainfifthline, 4);
     }
 
-void Cactus (int x, int y, double sizeX, double sizeY)
+void Cactus_draw  (int x, int y, double sizeX, double sizeY)
     {
     txSetColor (RGB (102, 51, 51), 40/sizeY);
 
@@ -470,16 +506,18 @@ void Cactus (int x, int y, double sizeX, double sizeY)
     txLine (x - 60/sizeX,       y + 100/sizeY, x - 50/sizeX, y +  50/sizeY);
     }
 
-void Chuck  (int x, int y, double sizeX, double sizeY, int eyebrows, int hear)
+void Chuck_draw  (int x, int y, double sizeX, double sizeY, int eyebrows, int hear)
     {
     txSetColor     (RGB(255, 255, 51));
     txSetFillColor (RGB(255, 255, 51));
 
-    POINT bird[14]= {{x, y}, {x - 15*sizeX, y + 30*sizeY}, {x - 105*sizeX, y + 160*sizeY},
-                     {x -  90*sizeX, y + 190*sizeY}, {x -  45*sizeX, y + 200*sizeY}, {x -   5*sizeX, y + 220*sizeY},
-                     {x +  45*sizeX, y + 215*sizeY}, {x +  90*sizeX, y + 200*sizeY}, {x + 125*sizeX, y + 190*sizeY},
-                     {x + 145*sizeX, y + 170*sizeY}, {x + 155*sizeX, y + 140*sizeY}, {x +  95*sizeX, y +  70*sizeY},
-                     {x +  45*sizeX, y +  35*sizeY}, {x +  15*sizeX, y +  10*sizeY}};
+    POINT bird[14]= {{x, y}, {x - ROUND (15*sizeX), y + ROUND (30*sizeY)}, {x - ROUND (105*sizeX), y + ROUND (160*sizeY)},
+                     {x - ROUND ( 90*sizeX), y + ROUND (190*sizeY)}, {x - ROUND ( 45*sizeX), y + ROUND (200*sizeY)},
+                     {x - ROUND (  5*sizeX), y + ROUND (220*sizeY)}, {x + ROUND ( 45*sizeX), y + ROUND (215*sizeY)},
+                     {x + ROUND ( 90*sizeX), y + ROUND (200*sizeY)}, {x + ROUND (125*sizeX), y + ROUND (190*sizeY)},
+                     {x + ROUND (145*sizeX), y + ROUND (170*sizeY)}, {x + ROUND (155*sizeX), y + ROUND (140*sizeY)},
+                     {x + ROUND ( 95*sizeX), y + ROUND ( 70*sizeY)}, {x + ROUND ( 45*sizeX), y + ROUND ( 35*sizeY)},
+                     {x + ROUND ( 15*sizeX), y + ROUND ( 10*sizeY)}};
     txPolygon (bird, 14);
 
     txSetColor     (TX_BLACK);
@@ -495,10 +533,6 @@ void Chuck  (int x, int y, double sizeX, double sizeY, int eyebrows, int hear)
     txLine    (x + 15*sizeX, y + 100*sizeY, x -  75*sizeX, y + (70 - eyebrows)*sizeY);
     txLine    (x + 45*sizeX, y + 100*sizeY, x + 130*sizeX, y + (50 - eyebrows)*sizeY);
 
-
-
-
-
     txSetColor(TX_BLACK, 3);
     txLine (x + 15*sizeX, y + 10*sizeY, x -  (75 + hear/2)*sizeX, y - (30 - hear)*sizeY);
     txLine (x + 15*sizeX, y + 10*sizeY, x -  (85 + hear/2)*sizeX, y - (10 - hear)*sizeY);
@@ -508,15 +542,16 @@ void Chuck  (int x, int y, double sizeX, double sizeY, int eyebrows, int hear)
     txLine (x - 85*sizeX, y + 130*sizeY, x - 125*sizeX, y + 110*sizeY);
     txLine (x - 85*sizeX, y + 130*sizeY, x - 130*sizeX, y + 130*sizeY);
 
-    txSetColor     (RGB (153, 102, 0),2);
+    txSetColor     (RGB (153, 102, 0), 2);
     txSetFillColor (RGB (204, 153, 0));
 
-    POINT beakUp[4] = {{            x, y + 145*sizeY}, {x + 45*sizeX, y + 135*sizeY},
-                       {x + 140*sizeX, y + 155*sizeY}, {x + 35*sizeX, y + 115*sizeY}};
-    txPolygon (beakUp,4);
+    POINT beakUp[4] = {{                    x, y + ROUND (145*sizeY)}, {x + ROUND (45*sizeX), y + ROUND (135*sizeY)},
+                       {x + ROUND (140*sizeX), y + ROUND (155*sizeY)}, {x + ROUND (35*sizeX), y + ROUND (115*sizeY)}};
+    txPolygon (beakUp, 4);
 
-    POINT beakDown[3] = {{x, y + 145*sizeY}, {x + 45*sizeX, y + 135*sizeY}, {x + 97*sizeX, y + 150*sizeY}};
-    txPolygon (beakDown,3);
+    POINT beakDown[3] = {{                  x, y + ROUND (145*sizeY)}, {x + ROUND (45*sizeX), y + ROUND (135*sizeY)},
+                         {x + ROUND(97*sizeX), y + ROUND (150*sizeY)}};
+    txPolygon (beakDown, 3);
     }
 
 
@@ -545,8 +580,9 @@ void Water_lily_draw  (int  x, int  y, double sizeX, double sizeY)
     txSetColor     (RGB (202, 55, 103));
     txSetFillColor (RGB (202, 55, 103));
 
-    POINT petalmiddle [3] = {{x + 180*sizeX, y + 10*sizeY}, {x + 210*sizeX, y - 80*sizeY},
-                             {x + 240*sizeX, y + 10*sizeY}};
+    POINT petalmiddle [3] = {{x + ROUND (180*sizeX), y + ROUND (10*sizeY)},
+                             {x + ROUND (210*sizeX), y - ROUND (80*sizeY)},
+                             {x + ROUND (240*sizeX), y + ROUND (10*sizeY)}};
     txPolygon (petalmiddle, 3);
     }
 
@@ -590,14 +626,14 @@ void Grass_draw (int x, int y, COLORREF color, double sizeX, double sizeY)
     {
     txSetColor     (color);
     txSetFillColor (color);
-    POINT grass[15] = {{            x, y}, {x -  70*sizeX, y -  30*sizeY},
-                       {x +  20*sizeX, y}, {x -  10*sizeX, y -  30*sizeY},
-                       {x +  40*sizeX, y}, {x +  20*sizeX, y - 100*sizeY},
-                       {x +  60*sizeX, y}, {x +  60*sizeX, y -  60*sizeY},
-                       {x +  80*sizeX, y}, {x + 110*sizeX, y - 100*sizeY},
-                       {x +  90*sizeX, y}, {x + 130*sizeX, y -  60*sizeY},
-                       {x + 110*sizeX, y}, {x + 130*sizeX, y -  20*sizeY},
-                       {x + 120*sizeX, y}};
+    POINT grass[15] = {{                    x, y}, {x - ROUND ( 70*sizeX), y - ROUND ( 30*sizeY)},
+                       {x + ROUND ( 20*sizeX), y}, {x - ROUND ( 10*sizeX), y - ROUND ( 30*sizeY)},
+                       {x + ROUND ( 40*sizeX), y}, {x + ROUND ( 20*sizeX), y - ROUND (100*sizeY)},
+                       {x + ROUND ( 60*sizeX), y}, {x + ROUND ( 60*sizeX), y - ROUND ( 60*sizeY)},
+                       {x + ROUND ( 80*sizeX), y}, {x + ROUND (110*sizeX), y - ROUND (100*sizeY)},
+                       {x + ROUND ( 90*sizeX), y}, {x + ROUND (130*sizeX), y - ROUND ( 60*sizeY)},
+                       {x + ROUND (110*sizeX), y}, {x + ROUND (130*sizeX), y - ROUND ( 20*sizeY)},
+                       {x + ROUND (120*sizeX), y}};
     txPolygon (grass, 15);
     }
 
@@ -606,11 +642,6 @@ void Skateboard_draw   (int x, int y, double sizeX, double sizeY)
     txSetColor     (RGB (35, 144, 120), 5);
     txSetFillColor (RGB (139, 131, 120));
     txEllipse (x, y, x + 340*sizeX, y + 20*sizeY);
-
-    txSetColor     (RGB ( 96, 123, 139), 15);
-    txSetFillColor (TX_WHITE);
-    txCircle  (x +  80*sizeX, y + 30*sizeY, 30*sizeX);
-    txCircle  (x + 270*sizeX, y + 30*sizeY, 30*sizeX);
     }
 
 void Girl_draw (int x, int y, double sizeX, double sizeY, int hands_UP,
@@ -631,9 +662,9 @@ void Girl_draw (int x, int y, double sizeX, double sizeY, int hands_UP,
     txCircle   (x - 50*sizeX, y + 30*sizeY, 25*sizeX);
     txCircle   (x + 50*sizeX, y + 30*sizeY, 25*sizeX);
 
-    POINT girlsGown[4] = {{x - 30*sizeX, y}, {x + 30*sizeX, y},
-                          {x + 70*sizeX, y + 120*sizeY},
-                          {x - 80*sizeX, y + 120*sizeY}};
+    POINT girlsGown[4] = {{x - ROUND (30*sizeX), y}, {x + ROUND(30*sizeX), y},
+                          {x + ROUND (70*sizeX), y + ROUND(120*sizeY)},
+                          {x - ROUND (80*sizeX), y + ROUND(120*sizeY)}};
     txPolygon (girlsGown, 4);
 
     txSetFillColor (TX_WHITE);
@@ -686,10 +717,10 @@ void Girl_draw (int x, int y, double sizeX, double sizeY, int hands_UP,
 
     txSetColor     (RGB (207, 58, 96));
     txSetFillColor (RGB (207, 58, 96));
-    POINT girlsMouth[4] = {{x - 22*sizeX, y -  20*sizeY},
-                           {x -  7*sizeX, y - (20 - mouthTOPpoint)*sizeY},
-                           {x + 22*sizeX, y -  20*sizeY},
-                           {           x, y - (10 - mouthLOWERpoint)*sizeY}};
+    POINT girlsMouth[4] = {{x - ROUND (22*sizeX), y - ROUND ( 20*sizeY)},
+                           {x - ROUND ( 7*sizeX), y - ROUND ((20 - mouthTOPpoint)*sizeY)},
+                           {x + ROUND (22*sizeX), y - ROUND ( 20*sizeY)},
+                           {                   x, y - ROUND ((10 - mouthLOWERpoint)*sizeY)}};
     txPolygon (girlsMouth, 4);
     }
 
@@ -704,9 +735,10 @@ void WorkisDone  (int x, int y)
     {
     txSetColor   (RGB (255, 215, 0));
     txSelectFont ("Comic Sans MS", 60);
-    txTextOut    ( x, y, "Работа сделана");
-    txTextOut    ( x, y + 100, "учителем информатики");
-    txTextOut    ( x, y + 200, "АБРАМОВОЙ И.В.");
+    txTextOut    ( x, y, "Работу выполнила");
+    txTextOut    ( x, y + 100, "учитель информатики");
+    txTextOut    ( x, y + 200, "Абрамова И.В.");
+    txTextOut    ( x, y + 300, "гимназия 36, Краснодар");
     }
 
 void MouseBody_draw (int x, int y, double width, double height, COLORREF bodyColor, COLORREF earsColor)
@@ -714,12 +746,12 @@ void MouseBody_draw (int x, int y, double width, double height, COLORREF bodyCol
     txSetColor     (bodyColor);
     txSetFillColor (bodyColor);
 
-    POINT body[3] = {{x, y}, {x + 90*width, y - 100*height}, {x + 110*height, y + 20*height}};
+    POINT body[3] = {{x, y}, {x + ROUND (90*width), y - ROUND (100*height)}, {x + ROUND (110*height), y + ROUND (20*height)}};
     txPolygon (body, 3);
 
-    POINT head[3] = {{x +  40*width, y - 100*height},
-                     {x + 100*width, y - 140*height},
-                     {x + 140*width, y -  50*height}};
+    POINT head[3] = {{x + ROUND ( 40*width), y - ROUND (100*height)},
+                     {x + ROUND (100*width), y - ROUND (140*height)},
+                     {x + ROUND (140*width), y - ROUND ( 50*height)}};
     txPolygon (head, 3);
 
     txCircle (x + 90*width, y - 150*height, 30*width);
@@ -748,13 +780,16 @@ void CatBody_draw (int x, int y, double width, double height, double eyebrows, C
     txSetFillColor (catColor);
 
     txRectangle (x + 50*width, y + 120*height, x + 110*width, y + 100*height);
-    POINT cat_body[4] = {{x, y}, {x + 40*width, y},
-                        {x + 60*width, y + 120*height},
-                        {x - 30*width, y + 120*height}};
+
+    POINT cat_body[4] = {{x, y}, {x + ROUND (40*width), y},
+                        {x + ROUND (60*width), y + ROUND (120*height)},
+                        {x - ROUND (30*width), y + ROUND (120*height)}};
     txPolygon (cat_body, 4);
 
-    POINT cats_earL[3] = {{x, y}, {x - 45*width, y - 75*height}, {x + 25*width, y - 45*height}};
-    POINT cats_earR[3] = {{x + 25*width, y - 45*height}, {x + 85*width, y - 75*height}, {x + 40*width, y}};
+    POINT cats_earL[3] = {{x, y}, {x - ROUND (45*width), y - ROUND (75*height)},
+                                  {x + ROUND (25*width), y - ROUND (45*height)}};
+    POINT cats_earR[3] = {{x + ROUND (25*width), y - ROUND (45*height)},
+                          {x + ROUND (85*width), y - ROUND (75*height)}, {x + ROUND (40*width), y}};
     txPolygon (cats_earL, 3);
     txPolygon (cats_earR, 3);
 
@@ -782,4 +817,23 @@ void CatBody_draw (int x, int y, double width, double height, double eyebrows, C
     txSetFillColor (TX_LIGHTRED);
     txEllipse (x + 15*width, y - 20*height, x + 30*width, y - 14*height);
     }
+void Skate_wheels_drawer (int x0, int y0,  int r)
+    {
+    txSetColor     (RGB ( 96, 123, 139), 15);
+    txSetFillColor (TX_WHITE);
+    txCircle(x0, y0, r);
+    txCircle(x0 + 170, y0, r);
+    }
 
+void BigDipper_draw ( int x, int y, int r)
+    {
+    txSetColor     (RGB (176, 196, 222));
+    txSetFillColor (RGB ((252 + rand()%255), (252 + rand()%255), (252 + rand()%255)));
+    txCircle (x, y, r);
+    txCircle (x +  70, y -  70, r/2);
+    txCircle (x + 110, y +  30, r/2);
+    txCircle (x +  50, y + 110, r/2);
+    txCircle (x -  30, y +  30, r/2);
+    txCircle (x - 160, y +  50, r/2);
+    txCircle (x - 240, y + 110,   r);
+    }
