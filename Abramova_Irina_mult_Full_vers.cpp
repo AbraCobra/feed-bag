@@ -90,14 +90,13 @@ void SpringCountryScene()
     txBegin();
 
     int t = 0;
-    while (t <= 100)
+    while (t <= 150)
         {
         txClear();
         SpringFon();
 
         Cloud_draw     (      2*t,  20, 1.2, 1.2, TX_WHITE);
         Cloud_draw     (2*t + 900, 170, 0.5, 0.5, TX_WHITE);
-
 
         Millblades_draw (675, 180, ROUND (  100*cos(t*0.1) + 675),        ROUND (  100*sin(t*0.1) + 180));
         Millblades_draw (675, 180, ROUND (- 100*cos(t*0.1) + 675),        ROUND (- 100*sin(t*0.1) + 180));
@@ -116,8 +115,7 @@ void SpringCountryScene()
         Grass_draw     (450, 500, TX_GREEN, 0.9, 0.9);
         Grass_draw     (460, 520, TX_GREEN, 0.9, 0.9);
 
-
-        Girl_draw      (600 - 4*t, 500 - 0.5*t, 0.7, 0.7, (t/5)%10 + 10, ((t/4)%2)*50 - 50,
+        Girl_draw      (600 - 4*t, 500 - 0.5*t, 0.7, 0.7, (t/6%2*50) + 100, ((t/4)%2)*50 - 50,
                        (t/2)%10, 0, 0, 0, 0, t%2*3, 0, RGB (219, 112, 147));
 
         Skateboard_draw     (- 100 + 10*t, 700, 0.8, 0.8);
@@ -251,15 +249,17 @@ void FinishScene()
     txBegin();
 
     int t = 0;
-    while (t < 500)
+    while (t < 270)
         {
         txClear();
         SavanahLandscape();
 
-        BigDipper_draw (  20, 150, 4);
-        BigDipper_draw (  40, 350, 5);
-        BigDipper_draw (1010, 150, 4);
-        BigDipper_draw (1010, 250, 5);
+        BigDipper_draw (  20, 150, 4*t/50);
+        BigDipper_draw (  40, 350, 5*t/50);
+        BigDipper_draw ( 140, 450, 5*t/50);
+        BigDipper_draw (1010, 150, 4*t/50);
+        BigDipper_draw (1010, 250, 5*t/50);
+        BigDipper_draw (1010,  50, 6*t/50);
 
         FinishTitles   ( 250,  900 - 5*t);
         WorkisDone     ( 300, 1500 - 5*t);
@@ -353,7 +353,7 @@ void MountainsLandscape()
     POINT lavandsky[4] = {{0, 550}, {0, 0}, {1150, 0}, {1150, 550}};
     txPolygon (lavandsky, 4);
 
-    //---------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------
 
     txSetColor      (RGB (238, 130, 238));
     txSetFillColor  (RGB (216, 191, 216));
@@ -367,7 +367,7 @@ void MountainsLandscape()
     POINT pinkback[3] = {{510, 320}, {0, 280}, {0, 40}};
     txPolygon (pinkback, 3);
 
-    //----------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------
 
     txSetColor     (RGB (221, 160, 221));
     txSetFillColor (RGB (221, 160, 221));
@@ -821,8 +821,8 @@ void Skate_wheels_drawer (int x0, int y0,  int r)
     {
     txSetColor     (RGB ( 96, 123, 139), 15);
     txSetFillColor (TX_WHITE);
-    txCircle(x0, y0, r);
-    txCircle(x0 + 170, y0, r);
+    txCircle       (x0, y0, r);
+    txCircle       (x0 + 170, y0, r);
     }
 
 void BigDipper_draw ( int x, int y, int r)
