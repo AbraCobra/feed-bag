@@ -18,6 +18,7 @@ void Millblades_draw     (int x0, int y0, int x, int y);
 void Butterfly_draw      (int  x, int  y, COLORREF color, int bigness);
 void Water_lily_draw     (int  x, int  y, double sizeX, double sizeY);
 void Cactus_draw         (int  x, int  y, double sizeX, double sizeY);
+void Reed_draw           (int  x, int  y, double sizeX, double sizeY);
 void Chuck_draw          (int  x, int  y, double sizeX, double sizeY, int eyebrows, int hear);
 void Title_draw          (int  x, int  y);
 void TitleEnd_draw       (int  x, int  y);
@@ -28,8 +29,8 @@ void MouseBody_draw      (int  x, int  y, double width, double height, COLORREF 
 void CatBody_draw        (int  x, int  y, double width, double height, double eyebrows,
                           COLORREF catColor, COLORREF cat_breastColor);
 void Skateboard_draw     (int  x, int  y, double sizeX, double sizeY);
-void Skate_wheels_drawer (int x0, int y0,  int r);
-void BigDipper_draw      (int x, int y, int r);
+void Skate_wheels_drawer (int x0, int y0, int r);
+void BigDipper_draw      (int  x, int  y, int r);
 void Girl_draw           (int  x, int  y, double sizeX, double sizeY, int hands_UP,
                           int legs_DISTANCE,  int eyebrows_UP,
                           int eyesCRAZYleft,  int eyesPUPILleft,
@@ -55,7 +56,7 @@ void EntryScene()
     txBegin();
 
     int t = 0;
-    while (t <= 110)
+    while (t <= 120)
         {
         txClear();
         SpringFonBegining();
@@ -90,7 +91,7 @@ void SpringCountryScene()
     txBegin();
 
     int t = 0;
-    while (t <= 150)
+    while (t <= 120)
         {
         txClear();
         SpringFon();
@@ -151,6 +152,7 @@ void SpringFon()
 
     POINT hill[7] = {{0, 800}, {0, 450}, {600, 350}, {750, 350}, {1100, 430}, {1100, 800}, {0, 800}};
     txPolygon (hill, 7);
+
     txSetFillColor (RGB (0, 204, 0));
     txCircle  (300, 1150, 570);
     txCircle  (800, 1250, 570);
@@ -176,7 +178,12 @@ void PinkMountainScene()
         Water_lily_draw (  t +   50, 650, 0.3, 0.3);
         Water_lily_draw (  t +  850, 550, 0.7, 0.7);
         Chuck_draw      (7*t +  180, 600, 0.5, 0.5, (t%2*20) - 10, (t%2*30) + 50);
-
+        Reed_draw       ((t/7%2*20 - 30) + 800, 600, 0.8, 0.8);
+        Reed_draw       ((t/7%2*20 - 30) + 100, 550, 1.0, 1.0);
+        Reed_draw       ((t/7%2*20 - 30) + 300, 600, 0.8, 0.8);
+        Reed_draw       ((t/7%2*20 - 30) + 500, 700, 0.5, 0.5);
+        Reed_draw       ((t/7%2*20 - 30) + 700, 600, 0.5, 0.5);
+        Reed_draw       ((t/7%2*20 - 30) + 990, 500, 1.3, 1.3);
         txSleep (100);
         t++;
         }
@@ -204,7 +211,6 @@ void NightSavanahScene()
         Cactus_draw    ( 970, 470, 4, 4);
         Cactus_draw    ( 100, 460, 4, 4);
         Cactus_draw    ( 850, 560, 1, 1);
-
         Chuck_draw     (t*50, 10 + 20*t, 0.5, 0.5, 10, (t%2*30) + 50);
 
         txSleep(200);
@@ -260,7 +266,6 @@ void FinishScene()
         BigDipper_draw (1010, 150, 4*t/50);
         BigDipper_draw (1010, 250, 5*t/50);
         BigDipper_draw (1010,  50, 6*t/50);
-
         FinishTitles   ( 250,  900 - 5*t);
         WorkisDone     ( 300, 1500 - 5*t);
 
@@ -522,7 +527,7 @@ void Chuck_draw  (int x, int y, double sizeX, double sizeY, int eyebrows, int he
 
     txSetColor     (TX_BLACK);
     txSetFillColor (TX_WHITE);
-    txCircle (x - 30*sizeX, y + 112*sizeY, 22*sizeX);
+    txCircle (x - 30*sizeX, y + 115*sizeY, 22*sizeX);
     txCircle (x + 75*sizeX, y + 112*sizeY, 22*sizeX);
 
     txSetFillColor (TX_BLACK);
@@ -836,4 +841,23 @@ void BigDipper_draw ( int x, int y, int r)
     txCircle (x -  30, y +  30, r/2);
     txCircle (x - 160, y +  50, r/2);
     txCircle (x - 240, y + 110,   r);
+    }
+
+void Reed_draw (int x, int y, double sizeX, double sizeY)
+    {
+    txSetColor     (RGB (0, 102, 0),3);
+    txLine         (x, y, x -  5*sizeX, y + 390*sizeY);
+
+    txSetColor     (RGB (255, 204, 153), 3);
+    txSetFillColor (RGB (254, 102, 51));
+    txEllipse      (x - 8*sizeX, y + 2*sizeY, x + 11*sizeX, y + 200*sizeY);
+
+    txSetColor     (RGB (0, 102, 0),3);
+    txSetFillColor (RGB (0, 102, 0));
+    POINT reedLeaf[7] = {{x - ROUND ( 5*sizeX), y + ROUND (595*sizeY)}, {x - ROUND (60*sizeX), y + ROUND (120*sizeY)},
+                         {x - ROUND (80*sizeX), y + ROUND (130*sizeY)}, {x - ROUND (90*sizeX), y + ROUND (230*sizeY)},
+                         {x - ROUND (60*sizeX), y + ROUND (200*sizeY)}, {x - ROUND (80*sizeX), y + ROUND (130*sizeY)},
+                         {x - ROUND ( 5*sizeX), y + ROUND (390*sizeY)}};
+    txPolygon (reedLeaf, 7);
+
     }
