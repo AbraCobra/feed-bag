@@ -1,4 +1,4 @@
-#include "TxLib.h"
+#include "TXLib.h"
 #include <cmath>
 
 void EntryScene ();
