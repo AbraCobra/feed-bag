@@ -6,6 +6,7 @@ void SpringCountryScene();
 void PinkMountainScene();
 void NightSavanahScene();
 void NightSavanahSceneEnd();
+void NightSavanahSceneEndFalling();
 void SpringFonBegining();
 void FinishScene();
 void SpringFon();
@@ -17,7 +18,8 @@ void WindMill_draw       (int  x, int  y, double sizeX, double sizeY);
 void Millblades_draw     (int x0, int y0, int x, int y);
 void Butterfly_draw      (int  x, int  y, COLORREF color, int bigness);
 void Water_lily_draw     (int  x, int  y, double sizeX, double sizeY);
-void Cactus_draw         (int  x, int  y, double sizeX, double sizeY);
+void Cactus_draw         (int  x, int  y, double sizeX, double sizeY, COLORREF cactusColor);
+void Flower_draw         (int  x, int  y, double sizeX, double sizeY, COLORREF flowerColor);
 void Reed_draw           (int  x, int  y, double sizeX, double sizeY, int swaying);
 void Chuck_draw          (int  x, int  y, double sizeX, double sizeY, int eyebrows, int hear);
 void Title_draw          (int  x, int  y);
@@ -46,6 +48,7 @@ int main()
     PinkMountainScene ();
     NightSavanahScene ();
     NightSavanahSceneEnd();
+    NightSavanahSceneEndFalling();
     FinishScene();
 
     return 0;
@@ -54,9 +57,10 @@ int main()
 void EntryScene()
     {
     txBegin();
+    txPlaySound("av013.wav", SND_LOOP);
 
     int t = 0;
-    while (t <= 120)
+    while (t <= 90)
         {
         txClear();
         SpringFonBegining();
@@ -75,9 +79,9 @@ void EntryScene()
         Grass_draw (  950 +  2*t, 400, TX_GREEN, 0.5, 0.5);
 
         Title_draw          ( 1100 - 15*t, 100);
-        Skateboard_draw     (- 100 + 10*t, 700, 0.8, 0.8);
-        Skate_wheels_drawer ( - 50 + 10*t + ROUND (4*cos(t)) + ROUND (3*sin(t)), 730 + ROUND (3*cos(t)) - ROUND (4*sin(t)), 20);
-        Chuck_draw          (   20 + 10*t, 600, 0.5, 0.5, (t%2*20) - 10, (t%2*30) + 50);
+        Skateboard_draw     (- 100 + 12*t, 700, 0.8, 0.8);
+        Skate_wheels_drawer ( - 50 + 12*t + ROUND (4*cos(t)) + ROUND (3*sin(t)), 730 + ROUND (3*cos(t)) - ROUND (4*sin(t)), 20);
+        Chuck_draw          (   20 + 12*t, 600, 0.5, 0.5, (t%2*20) - 10, (t%2*30) + 50);
 
         txSleep (100);
         t++;
@@ -89,9 +93,10 @@ void EntryScene()
 void SpringCountryScene()
     {
     txBegin();
-
+    txPlaySound (NULL);
+    txPlaySound("av014.wav", SND_LOOP);
     int t = 0;
-    while (t <= 120)
+    while (t <= 115)
         {
         txClear();
         SpringFon();
@@ -166,7 +171,8 @@ void SpringFon()
 void PinkMountainScene()
     {
     txBegin();
-
+    txPlaySound (NULL);
+    txPlaySound("BY_RIVER.wav", SND_LOOP);
     int t = 0;
     int inclination = 30;
     while (t <= 120)
@@ -197,7 +203,8 @@ void PinkMountainScene()
 
 void NightSavanahScene()
     {
-
+    txPlaySound (NULL);
+    txPlaySound("MARTINET.wav", SND_LOOP);
     txBegin();
     int t = 0;
     while (t < 14)
@@ -206,15 +213,20 @@ void NightSavanahScene()
         SavanahLandscape();
 
         BigDipper_draw (  20, 150, 4);
-        BigDipper_draw (  40, 350, 5);
+        BigDipper_draw (  40, 250, 5);
         BigDipper_draw (1010, 150, 4);
         BigDipper_draw (1010, 250, 5);
-        Cactus_draw    ( 270, 450, 2, 2);
-        Cactus_draw    ( 170, 450, 3, 3);
-        Cactus_draw    ( 870, 440, 2, 2);
-        Cactus_draw    ( 970, 470, 4, 4);
-        Cactus_draw    ( 100, 460, 4, 4);
-        Cactus_draw    ( 850, 560, 1, 1);
+        Cactus_draw    ( 270, 450, 2, 2, RGB (102,   0,  51));
+        Cactus_draw    ( 170, 450, 3, 3, RGB (102,   0, 102));
+        Cactus_draw    ( 870, 440, 2, 2, RGB (102,   0,  51));
+        Cactus_draw    ( 970, 470, 4, 4, RGB (102,   0, 102));
+        Cactus_draw    ( 100, 460, 4, 4, RGB (102,   0,  51));
+        Cactus_draw    ( 850, 560, 1, 1, RGB (  0, 102,   0));
+        Flower_draw    ( 850, 565, 0.5, 0.5, RGB(255, 203, 255));
+        Flower_draw    ( 835, 465, 0.5, 0.5, RGB(255, 203, 255));
+        Flower_draw    ( 885, 410, 0.5, 0.5, RGB(255, 100, 255));
+        Flower_draw    ( 930, 510, 0.3, 0.3, RGB(255, 178, 255));
+        Flower_draw    ( 780, 620, 0.3, 0.3, RGB(255, 178, 100));
         Chuck_draw     (t*50, 10 + 20*t, 0.5, 0.5, 10, (t%2*30) + 50);
 
         txSleep(200);
@@ -226,36 +238,79 @@ void NightSavanahScene()
 
 void NightSavanahSceneEnd()
     {
+    txPlaySound (NULL);
+    //txPlaySound("BIRDHIT.wav", SND_LOOP);
     txBegin();
 
     int t = 0;
-    while (t < 10)
+    while (t < 2)
         {
         txClear();
         SavanahLandscape();
 
         BigDipper_draw (  20, 150, 4);
-        BigDipper_draw (  40, 350, 5);
+        BigDipper_draw (  40, 250, 5);
         BigDipper_draw (1010, 150, 4);
         BigDipper_draw (1010, 250, 5);
-        Cactus_draw    ( 270, 450, 2, 2);
-        Cactus_draw    ( 170, 450, 3, 3);
-        Cactus_draw    ( 870, 440, 2, 2);
-        Cactus_draw    ( 970, 470, 4, 4);
-        Cactus_draw    ( 100, 460, 4, 4);
-        Cactus_draw    ( 850, 560, 1, 1);
-        Chuck_draw     ( 820, 520, 0.5, 0.5, - 30, (t%2*30) + 50);
+        Cactus_draw    ( 270, 450, 2, 2, RGB (102,   0,  51));
+        Cactus_draw    ( 170, 450, 3, 3, RGB (102,   0, 102));
+        Cactus_draw    ( 870, 440, 2, 2, RGB (102,   0,  51));
+        Cactus_draw    ( 970, 470, 4, 4, RGB (102,   0, 102));
+        Cactus_draw    ( 100, 460, 4, 4, RGB (102,   0,  51));
+        Cactus_draw    ( 850, 560, 1, 1, RGB (  0, 102,   0));
+        Flower_draw    ( 850, 565, 0.5, 0.5, RGB(255, 203, 255));
+        Flower_draw    ( 835, 465, 0.5, 0.5, RGB(255, 203, 255));
+        Flower_draw    ( 885, 410, 0.5, 0.5, RGB(255, 100, 255));
+        Flower_draw    ( 930, 510, 0.3, 0.3, RGB(255, 178, 255));
+        Flower_draw    ( 780, 620, 0.3, 0.3, RGB(255, 178, 100));
+        Chuck_draw     ( 750, 520, 0.5, 0.5, - 30, (t%2*30) + 50);
 
-        txSleep(200);
+        txSleep(100);
         t++;
         }
 
     txEnd();
     }
 
+void NightSavanahSceneEndFalling()
+     {
+    txPlaySound (NULL);
+    txPlaySound("BIRDHIT.wav", SND_LOOP);
+    txBegin();
+
+    int t = 0;
+    while (t < 5)
+        {
+        txClear();
+        SavanahLandscape();
+
+        BigDipper_draw (  20, 150, 4);
+        BigDipper_draw (  40, 250, 5);
+        BigDipper_draw (1010, 150, 4);
+        BigDipper_draw (1010, 250, 5);
+        Cactus_draw    ( 270, 450, 2, 2, RGB (102,   0,  51));
+        Cactus_draw    ( 170, 450, 3, 3, RGB (102,   0, 102));
+        Cactus_draw    ( 870, 440, 2, 2, RGB (102,   0,  51));
+        Cactus_draw    ( 970, 470, 4, 4, RGB (102,   0, 102));
+        Cactus_draw    ( 100, 460, 4, 4, RGB (102,   0,  51));
+        Cactus_draw    ( 850, 560, 1, 1, RGB (  0, 102,   0));
+        Flower_draw    ( 850, 565 + 50*t, 0.5, 0.5, RGB(255, 203, 255));
+        Flower_draw    ( 835, 465+ 50*t, 0.5, 0.5, RGB(255, 203, 255));
+        Flower_draw    ( 885, 410+ 50*t, 0.5, 0.5, RGB(255, 100, 255));
+        Flower_draw    ( 930, 510+ 50*t, 0.3, 0.3, RGB(255, 178, 255));
+        Flower_draw    ( 780, 620+ 50*t, 0.3, 0.3, RGB(255, 178, 100));
+        Chuck_draw     ( 820, 520, 0.5, 0.5, - 30, -20 );
+
+        txSleep(100);
+        t++;
+        }
+
+    txEnd();
+    }
 
 void FinishScene()
     {
+    txPlaySound (NULL);
     txBegin();
 
     int t = 0;
@@ -265,8 +320,8 @@ void FinishScene()
         SavanahLandscape();
 
         BigDipper_draw (  20, 150, 4*t/50);
-        BigDipper_draw (  40, 350, 5*t/50);
-        BigDipper_draw ( 140, 450, 5*t/50);
+        BigDipper_draw (  40,  50, 5*t/50);
+        BigDipper_draw ( 140, 250, 5*t/50);
         BigDipper_draw (1010, 150, 4*t/50);
         BigDipper_draw (1010, 250, 5*t/50);
         BigDipper_draw (1010,  50, 6*t/50);
@@ -503,9 +558,9 @@ void SavanahLandscape()
     txPolygon (mountainfifthline, 4);
     }
 
-void Cactus_draw  (int x, int y, double sizeX, double sizeY)
+void Cactus_draw  (int x, int y, double sizeX, double sizeY, COLORREF cactusColor)
     {
-    txSetColor (RGB (102, 51, 51), 40/sizeY);
+    txSetColor (cactusColor, 40/sizeY);
 
     txLine (           x,       y - 190/sizeY, x,            y + 170/sizeY);
     txLine (x - 50/sizeX,                   y, x + 60/sizeX,             y);
@@ -849,25 +904,39 @@ void BigDipper_draw ( int x, int y, int r)
 
 void Reed_draw (int x, int y, double sizeX, double sizeY, int swaying)
     {
-     txSetColor     (RGB (0, 102, 0),3);
-     txLine         (x-swaying, y+100, x - 5*sizeX, y + 600*sizeY);
+    txSetColor     (RGB (0, 102, 0),3);
+    txLine         (x - swaying, y + 100, x - 5*sizeX, y + 600*sizeY);
 
-     txSetColor     (RGB (102, 0, 51), 3);
-     txSetFillColor (RGB (102, 0, 51));
-     txCircle       (x-1.0*swaying-swaying, y, 15);
-     txCircle       (x-0.8*swaying-swaying, y +  20, 15);
-     txCircle       (x-0.6*swaying-swaying, y +  40, 15);
-     txCircle       (x-0.4*swaying-swaying, y +  60, 15);
-     txCircle       (x-0.2*swaying-swaying, y +  80, 15);
-     txCircle       (x-swaying, y + 100, 15);
-     //txEllipse (x - (5-swaying)*sizeX, y + 2*sizeY, x + 8*sizeX, y + (200-swaying)*sizeY);
+    txSetColor     (RGB (102, 0, 51), 3);
+    txSetFillColor (RGB (102, 0, 51));
+    txCircle       (x - 1.0*swaying - swaying, y, 15);
+    txCircle       (x - 0.8*swaying - swaying, y +  20, 15);
+    txCircle       (x - 0.6*swaying - swaying, y +  40, 15);
+    txCircle       (x - 0.4*swaying - swaying, y +  60, 15);
+    txCircle       (x - 0.2*swaying - swaying, y +  80, 15);
+    txCircle       (x - swaying, y + 100, 15);
 
-     txSetColor     (RGB (0, 102, 0),3);
-     txSetFillColor (RGB (0, 102, 0));
-     POINT reedLeaf[7] = {{x - ROUND ((5-swaying)*sizeX), y + ROUND (595*sizeY)}, {x - ROUND ((60-swaying)*sizeX), y + ROUND (120*sizeY)},
-                          {x - ROUND ((80-swaying)*sizeX), y + ROUND (130*sizeY)}, {x - ROUND ((90-swaying)*sizeX), y + ROUND (230*sizeY)},
-                          {x - ROUND ((60-swaying)*sizeX), y + ROUND (200*sizeY)}, {x - ROUND ((80-swaying)*sizeX), y + ROUND (130*sizeY)},
-                          {x - ROUND ( (5-swaying)*sizeX), y + ROUND (390*sizeY)}};
+    txSetColor     (RGB (0, 102, 0),3);
+    txSetFillColor (RGB (0, 102, 0));
+    POINT reedLeaf[7] = {{x - ROUND (( 5 - swaying)*sizeX), y + ROUND (595*sizeY)}, {x - ROUND ((60-swaying)*sizeX), y + ROUND (120*sizeY)},
+                          {x - ROUND ((80 - swaying)*sizeX), y + ROUND (130*sizeY)}, {x - ROUND ((90-swaying)*sizeX), y + ROUND (230*sizeY)},
+                          {x - ROUND ((60 - swaying)*sizeX), y + ROUND (200*sizeY)}, {x - ROUND ((80-swaying)*sizeX), y + ROUND (130*sizeY)},
+                          {x - ROUND (( 5 - swaying)*sizeX), y + ROUND (390*sizeY)}};
     txPolygon (reedLeaf, 7);
 
+    }
+
+void Flower_draw (int x, int y, double sizeX, double sizeY,  COLORREF flowerColor)
+    {
+    txSetColor     (flowerColor);
+    txSetFillColor (flowerColor);
+
+    txCircle (x - 20*sizeX, y - 20*sizeY, 30*sizeX);
+    txCircle (x + 20*sizeX, y - 20*sizeY, 30*sizeX);
+    txCircle (x - 20*sizeX, y + 20*sizeY, 30*sizeX);
+    txCircle (x + 20*sizeX, y + 20*sizeY, 30*sizeX);
+
+    txSetColor     (RGB (153, 0, 151));
+    txSetFillColor (RGB (153, 0, 15));
+    txCircle (x, y, 30*sizeX);
     }
