@@ -18,7 +18,7 @@ void Millblades_draw     (int x0, int y0, int x, int y);
 void Butterfly_draw      (int  x, int  y, COLORREF color, int bigness);
 void Water_lily_draw     (int  x, int  y, double sizeX, double sizeY);
 void Cactus_draw         (int  x, int  y, double sizeX, double sizeY);
-void Reed_draw           (int  x, int  y, double sizeX, double sizeY);
+void Reed_draw           (int  x, int  y, double sizeX, double sizeY, int swaying);
 void Chuck_draw          (int  x, int  y, double sizeX, double sizeY, int eyebrows, int hear);
 void Title_draw          (int  x, int  y);
 void TitleEnd_draw       (int  x, int  y);
@@ -168,8 +168,10 @@ void PinkMountainScene()
     txBegin();
 
     int t = 0;
-    while (t <= 110)
+    int inclination = 30;
+    while (t <= 120)
         {
+
         txClear();
         MountainsLandscape();
 
@@ -178,12 +180,14 @@ void PinkMountainScene()
         Water_lily_draw (  t +   50, 650, 0.3, 0.3);
         Water_lily_draw (  t +  850, 550, 0.7, 0.7);
         Chuck_draw      (7*t +  180, 600, 0.5, 0.5, (t%2*20) - 10, (t%2*30) + 50);
-        Reed_draw       ((t/7%2*20 - 30) + 800, 600, 0.8, 0.8);
-        Reed_draw       ((t/7%2*20 - 30) + 100, 550, 1.0, 1.0);
-        Reed_draw       ((t/7%2*20 - 30) + 300, 600, 0.8, 0.8);
-        Reed_draw       ((t/7%2*20 - 30) + 500, 700, 0.5, 0.5);
-        Reed_draw       ((t/7%2*20 - 30) + 700, 600, 0.5, 0.5);
-        Reed_draw       ((t/7%2*20 - 30) + 990, 500, 1.3, 1.3);
+
+        Reed_draw       (800, 600, 0.8, 0.8, abs (t%inclination - inclination/2) - inclination/4);
+        Reed_draw       (100, 550, 1.0, 1.0, abs (t%inclination - inclination/2) - inclination/4);
+        Reed_draw       (300, 600, 0.8, 0.8, abs (t%inclination - inclination/2) - inclination/4);
+        Reed_draw       (500, 700, 0.5, 0.5, abs (t%inclination - inclination/2) - inclination/4);
+        Reed_draw       (700, 600, 0.5, 0.5, abs (t%inclination - inclination/2) - inclination/4);
+        Reed_draw       (990, 500, 1.3, 1.3, abs (t%inclination - inclination/2) - inclination/4);
+
         txSleep (100);
         t++;
         }
@@ -843,21 +847,27 @@ void BigDipper_draw ( int x, int y, int r)
     txCircle (x - 240, y + 110,   r);
     }
 
-void Reed_draw (int x, int y, double sizeX, double sizeY)
+void Reed_draw (int x, int y, double sizeX, double sizeY, int swaying)
     {
-    txSetColor     (RGB (0, 102, 0),3);
-    txLine         (x, y, x -  5*sizeX, y + 390*sizeY);
+     txSetColor     (RGB (0, 102, 0),3);
+     txLine         (x-swaying, y+100, x - 5*sizeX, y + 600*sizeY);
 
-    txSetColor     (RGB (255, 204, 153), 3);
-    txSetFillColor (RGB (254, 102, 51));
-    txEllipse      (x - 8*sizeX, y + 2*sizeY, x + 11*sizeX, y + 200*sizeY);
+     txSetColor     (RGB (102, 0, 51), 3);
+     txSetFillColor (RGB (102, 0, 51));
+     txCircle       (x-1.0*swaying-swaying, y, 15);
+     txCircle       (x-0.8*swaying-swaying, y +  20, 15);
+     txCircle       (x-0.6*swaying-swaying, y +  40, 15);
+     txCircle       (x-0.4*swaying-swaying, y +  60, 15);
+     txCircle       (x-0.2*swaying-swaying, y +  80, 15);
+     txCircle       (x-swaying, y + 100, 15);
+     //txEllipse (x - (5-swaying)*sizeX, y + 2*sizeY, x + 8*sizeX, y + (200-swaying)*sizeY);
 
-    txSetColor     (RGB (0, 102, 0),3);
-    txSetFillColor (RGB (0, 102, 0));
-    POINT reedLeaf[7] = {{x - ROUND ( 5*sizeX), y + ROUND (595*sizeY)}, {x - ROUND (60*sizeX), y + ROUND (120*sizeY)},
-                         {x - ROUND (80*sizeX), y + ROUND (130*sizeY)}, {x - ROUND (90*sizeX), y + ROUND (230*sizeY)},
-                         {x - ROUND (60*sizeX), y + ROUND (200*sizeY)}, {x - ROUND (80*sizeX), y + ROUND (130*sizeY)},
-                         {x - ROUND ( 5*sizeX), y + ROUND (390*sizeY)}};
+     txSetColor     (RGB (0, 102, 0),3);
+     txSetFillColor (RGB (0, 102, 0));
+     POINT reedLeaf[7] = {{x - ROUND ((5-swaying)*sizeX), y + ROUND (595*sizeY)}, {x - ROUND ((60-swaying)*sizeX), y + ROUND (120*sizeY)},
+                          {x - ROUND ((80-swaying)*sizeX), y + ROUND (130*sizeY)}, {x - ROUND ((90-swaying)*sizeX), y + ROUND (230*sizeY)},
+                          {x - ROUND ((60-swaying)*sizeX), y + ROUND (200*sizeY)}, {x - ROUND ((80-swaying)*sizeX), y + ROUND (130*sizeY)},
+                          {x - ROUND ( (5-swaying)*sizeX), y + ROUND (390*sizeY)}};
     txPolygon (reedLeaf, 7);
 
     }
