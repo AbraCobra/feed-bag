@@ -13,4 +13,4 @@ Animation includes more then twenty objects which have opportunity to be animate
 - Skate_wheels_draw()
 - Chuck_draw()
 - Title_draw()
-[EntryScene](https://github.com/AbraCobra/feed-bag/blob/main/Entryscene.png)
+![EntryScene](https://github.com/AbraCobra/feed-bag/blob/main/Entryscene.png)
